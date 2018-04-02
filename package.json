@@ -1,0 +1,37 @@
+{
+  "name": "nuxt-test",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "Yuichi Ikeda <ikeda@framelunch.jp>",
+  "private": true,
+  "scripts": {
+    "dev": "HOST=0.0.0.0 PORT=9098 nuxt -c src/nuxt.config.js",
+    "build": "nuxt build -c src/nuxt.config.js",
+    "start": "nuxt start -c src/nuxt.config.js",
+    "generate": "NODE_ENV=production nuxt generate -c src/nuxt.config.js",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "animejs": "^2.2.0",
+    "axios": "^0.18.0",
+    "globby": "^8.0.1",
+    "highlight.js": "^9.12.0",
+    "html-loader": "^0.5.5",
+    "markdown-it": "^8.4.1",
+    "markdown-it-attrs": "^1.2.1",
+    "markdown-it-container": "^2.0.0",
+    "markdown-it-meta": "^0.0.1",
+    "markdown-loader": "^2.0.2",
+    "nodemon": "^1.17.2",
+    "nuxt": "^1.4.0",
+    "sanitize.css": "^5.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.19.1",
+    "eslint-friendly-formatter": "^4.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-vue": "^4.4.0"
+  }
+}

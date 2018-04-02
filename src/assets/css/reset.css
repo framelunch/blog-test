@@ -1,0 +1,36 @@
+/* stylelint-disable */
+@import 'sanitize.css';
+body, div, dl, dt, dd, ul, ol, li, hr, h1, h2, h3, h4, h5, h6, address,
+pre, code, form, fieldset, legend, input, button, textarea, p, blockquote,
+table, th, td, iframe, form, fieldset, input, button, select, optgroup, option,
+textarea, label, legend, span, em, strong, dfn, code, samp, kbd, var, cite, abbr,
+acronym, q, br, ins, del, a, img, object {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+body {
+    font-size: 1rem;
+}
+
+div, blockquote, p, pre, ul, ol, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, address,
+table, caption, th, td, span, em, strong, dfn, code, samp, kbd, var, cite, abbr, acronym, q, br,
+ins, del, a, img, object, iframe {
+    border: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 100%;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+ul, li {
+    list-style: none;
+}
+img {
+    vertical-align: bottom;
+}
