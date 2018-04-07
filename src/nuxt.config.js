@@ -1,10 +1,9 @@
 const globby = require('globby');
 const fs = require('fs');
-const md = require('./plugins/markdown');
 
 module.exports = {
   build: {
-    vendor: ['animejs'],
+    vendor: ['axios', 'markdown-it', 'animejs'],
     extend(config, { isServer }) {
       config.module.rules.push({
         test: /\.md$/,
@@ -28,13 +27,18 @@ module.exports = {
   generate: {
     dir: 'public',
     routes() {
-      let docs = [];
-      globby.sync('src/md/**/*').forEach(filename => {
-        const payload = md.render(fs.readFileSync(filename, 'utf8'));
-        // TODO: ここでmd.metaで情報取れる
+      const docs = [];
+      const meta = {};
+      // TODO: generate時にsummaryを出力するタイミングが欲しい
+      globby.sync('src/static/contents/**/*').forEach(filename => {
+        const html = fs.readFileSync(filename, 'utf8');
+        const path = filename
+          .replace('src/static/_contents', '')
+          .replace('.html', '')
+          .split('-').join('/');
         docs.push({
-          route: filename.replace('src/md', '').replace('.md', ''),
-          payload,
+          route: path,
+          payload: html
         });
       });
       return docs;
@@ -55,7 +59,7 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
 
-  modules: ['~/modules/mds'],
+  modules: ['~/modules/convert', '~/modules/mds'],
 
   plugins: ['~/plugins/global'],
 

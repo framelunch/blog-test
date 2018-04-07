@@ -1,8 +1,10 @@
+const globby = require('globby');
+const fs = require('fs');
+
 const attr = require('markdown-it-attrs');
 const container = require('markdown-it-container');
 const meta = require('markdown-it-meta');
 const hljs = require('highlight.js');
-
 const md = require('markdown-it')({
   html: true,
   linkify: true,
@@ -28,4 +30,19 @@ const md = require('markdown-it')({
   .use(container)
   .use(container, 'warning');
 
-module.exports = md;
+module.exports = function() {
+  globby.sync('md/**/*').forEach(filename => {
+    const html = md.render(fs.readFileSync(filename, 'utf8'));
+    const path = filename
+      .replace('md/', '')
+      .replace('.md', '.html')
+      .split('/')
+      .join('-');
+
+    fs.writeFileSync(
+      process.cwd() + '/src/static/_contents/' + path,
+      html,
+      'utf8',
+    );
+  });
+};

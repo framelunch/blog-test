@@ -1,25 +1,28 @@
 <template>
-  <div>
-    <div v-html="data"></div>
-  </div>
+  <div v-html="content[this.$route.params.id]"></div>
 </template>
 
 <script>
-import axios from 'axios';
+import { mapState, mapActions } from 'vuex';
+const category = 'news';
 
 export default {
   validate({ params }) {
     return !isNaN(+params.id);
   },
-  asyncData({ error, payload, route, store, app }) {
+  async fetch({ error, payload, route, store, app }) {
+    // asyncDataと同じく、fetchでもthisは使えない
     if (payload) {
-      return { data: payload };
+      // generate only
+      store.commit('setContent', { category, id: route.params.id, data: payload });
+    } else {
+      return store.dispatch('getMdFile', { category, id: route.params.id });
     }
-    return { data: store.state.contents[route.path] };
   },
   layout: 'news',
-  data() {
-    return { data: 'test' };
-  },
+
+  computed: mapState({
+    content: state => state.contents[category],
+  }),
 };
 </script>
