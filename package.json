@@ -9,6 +9,7 @@
     "build": "nuxt build -c src/nuxt.config.js",
     "start": "nuxt start -c src/nuxt.config.js",
     "generate": "cross-env PORT=9090 NODE_ENV=production nuxt generate -c src/nuxt.config.js",
+    "new": "node modules/md-generator.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
@@ -28,11 +29,14 @@
     "sanitize.css": "^5.0.0"
   },
   "devDependencies": {
+    "argv": "^0.0.2",
     "babel-eslint": "^8.2.2",
     "cross-env": "^5.1.4",
+    "date-fns": "^1.29.0",
     "eslint": "^4.19.1",
     "eslint-friendly-formatter": "^4.0.0",
     "eslint-loader": "^2.0.0",
-    "eslint-plugin-vue": "^4.4.0"
+    "eslint-plugin-vue": "^4.4.0",
+    "fs-extra": "^5.0.0"
   }
 }
