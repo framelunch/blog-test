@@ -7,10 +7,12 @@
       </div>
       <div>{{ JSON.stringify(metas) }}</div>
       <div>
-        nuxt-link: <nuxt-link to="/news/20180329/">news: 2018/03/29</nuxt-link>
+        nuxt-link:
+        <nuxt-link to="/news/20180329/">news: 2018/03/29</nuxt-link>
       </div>
       <div>
-        a: <a href="/news/20180329">news: 2018/03/29</a>
+        a:
+        <a href="/news/20180329">news: 2018/03/29</a>
       </div>
 
     </div>
@@ -24,7 +26,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

@@ -1,23 +1,25 @@
 <template>
-  <div v-html="content[this.$route.params.id]"></div>
+  <div v-html="content[this.$route.params.id]" />
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+/* global isNaN */
+import { mapState, mapActions } from 'vuex'; //eslint-disable-line
+
 const category = 'news';
 
 export default {
   validate({ params }) {
-    return !isNaN(+params.id);
+    // TODO: 動的URLのバリデーション
+    return true;
   },
-  async fetch({ error, payload, route, store, app }) {
+  fetch({ payload, route, store }) {
     // asyncDataと同じく、fetchでもthisは使えない
     if (payload) {
       // generate only
-      store.commit('setContent', { category, id: route.params.id, data: payload });
-    } else {
-      return store.dispatch('getMdFile', { category, id: route.params.id });
+      return store.commit('setContent', { category, id: route.params.id, data: payload });
     }
+    return store.dispatch('getMdFile', { category, id: route.params.id });
   },
   layout: 'news',
 

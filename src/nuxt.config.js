@@ -19,26 +19,24 @@ module.exports = {
     },
   },
 
-  css: [
-    { src: './assets/css/main.css', lang: 'postcss' },
-    { src: 'highlight.js/styles/agate.css' },
-  ],
+  css: [{ src: './assets/css/main.css', lang: 'postcss' }, { src: 'highlight.js/styles/agate.css' }],
 
   generate: {
     dir: 'public',
     routes() {
       const docs = [];
       const meta = {};
-      // TODO: generate時にsummaryを出力するタイミングが欲しい
-      globby.sync('src/static/contents/**/*').forEach(filename => {
+      // FIXME: modules/convert.jsで対応する <- generate時にsummaryを出力するタイミングが欲しい
+      globby.sync('src/static/_contents/**/*').forEach(filename => {
         const html = fs.readFileSync(filename, 'utf8');
         const path = filename
           .replace('src/static/_contents', '')
           .replace('.html', '')
-          .split('-').join('/');
+          .split('.')
+          .join('/');
         docs.push({
           route: path,
-          payload: html
+          payload: html,
         });
       });
       return docs;
