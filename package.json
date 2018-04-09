@@ -5,8 +5,9 @@
   "author": "Yuichi Ikeda <ikeda@framelunch.jp>",
   "private": true,
   "scripts": {
-    "dev": "HOST=0.0.0.0 PORT=9098 nuxt -c src/nuxt.config.js",
-    "generate": "PORT=9090 NODE_ENV=production nuxt generate -c src/nuxt.config.js",
+    "dev": "cross-env HOST=0.0.0.0 PORT=9098 nuxt -c src/nuxt.config.js",
+    "generate": "cross-env PORT=9090 NODE_ENV=production nuxt generate -c src/nuxt.config.js",
+    "new": "node modules/md-generator.js",
     "lint": "run-s lint:*",
     "lint:style": "stylelint --fix 'src/**/*.css'",
     "lint:script": "eslint --ext .js,.vue src/**/*.{js,vue}",
@@ -40,7 +41,10 @@
     "sanitize.css": "^5.0.0"
   },
   "devDependencies": {
+    "argv": "^0.0.2",
     "babel-eslint": "^8.2.2",
+    "cross-env": "^5.1.4",
+    "date-fns": "^1.29.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
@@ -53,6 +57,7 @@
     "eslint-plugin-vue": "^4.4.0",
     "flow-bin": "^0.69.0",
     "flow-typed": "^2.4.0",
+    "fs-extra": "^5.0.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.4",
     "npm-run-all": "^4.1.2",
