@@ -10,19 +10,13 @@ const md = require('markdown-it')({
   linkify: true,
   breaks: true,
   injected: true,
-  highlight: function(str, lang) {
+  highlight(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(lang, str, true).value +
-          '</code></pre>'
-        );
-      } catch (__) {}
+        return `<pre class="hljs"><code>${hljs.highlight(lang, str, true).value}</code></pre>`;
+      } catch (__) {} //eslint-disable-line
     }
-    return (
-      '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
-    );
+    return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
   },
 })
   .use(attr)
@@ -30,19 +24,15 @@ const md = require('markdown-it')({
   .use(container)
   .use(container, 'warning');
 
-module.exports = function() {
+module.exports = () => {
   globby.sync('md/**/*').forEach(filename => {
     const html = md.render(fs.readFileSync(filename, 'utf8'));
     const path = filename
       .replace('md/', '')
       .replace('.md', '.html')
       .split('/')
-      .join('-');
+      .join('.');
 
-    fs.writeFileSync(
-      process.cwd() + '/src/static/_contents/' + path,
-      html,
-      'utf8',
-    );
+    fs.writeFileSync(`${process.cwd()}/src/static/_contents/${path}`, html, 'utf8');
   });
 };

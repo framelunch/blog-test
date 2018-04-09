@@ -1,0 +1,79 @@
+{
+  "extends": ["airbnb", "plugin:flowtype/recommended", "plugin:vue/recommended", "plugin:prettier/recommended"],
+
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+
+  "plugins": ["flowtype", "flowtype-errors", "vue", "prettier"],
+
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "sourceType": "module",
+    "allowImportExportEverywhere": false
+  },
+
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  },
+
+  "globals": {
+    "browser": true
+  },
+
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "all"
+      }
+    ],
+
+    "no-param-reassign": "off",
+    "one-var": "off",
+    "eqeqeq": ["error", "always"],
+    "no-duplicate-imports": "off",
+    "class-methods-use-this": "off",
+
+    "object-property-newline": "off",
+    "no-underscore-dangle": "off",
+    "max-len": [
+      "error",
+      120,
+      2,
+      {
+        "ignoreUrls": true,
+        "ignoreComments": true,
+        "ignoreRegExpLiterals": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+
+    "no-unused-vars": [
+      "warn",
+      {
+        "caughtErrors": "none",
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "arrow-parens": ["error", "as-needed"],
+
+    "vue/max-attributes-per-line": [
+      2,
+      {
+        "singleline": 1,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": true
+        }
+      }
+    ]
+  }
+}
