@@ -1,10 +1,14 @@
 import axios from 'axios';
 
 export const state = () => ({
+  summary: [],
   contents: {},
 });
 
 export const mutations = {
+  setSummary(_state, summary) {
+    _state.summary = summary;
+  },
   setContent(_state, { category, id, data }) {
     const contents = { ..._state.contents[category], [id]: data };
     _state.contents[category] = contents;
@@ -12,7 +16,7 @@ export const mutations = {
 };
 
 export const actions = {
-  nuxtServerInit({ commit }, { isStatic, req }) {
+  async nuxtServerInit({ commit }, { isStatic }) {
     // FIXME: mdファイルを編集後、呼ばれるのでhtml変換処理を行う。開発中のみ。
     if (process.env.NODE_ENV === 'development' && process.server && !isStatic) {
       /**
@@ -20,10 +24,19 @@ export const actions = {
        * 全てのファイルを再変換ではなく、変更のあったファイルだけhtmlに変換したい
        * req.urlから判別できそうな気もする
        */
-      require('../modules/convert')(); //eslint-disable-line
+      require('../modules/convert')({ isDev: true }); //eslint-disable-line
+    }
+
+    if (process.server) {
+      const summary = await axios({
+        method: 'get',
+        url: `http://localhost:${process.env.PORT}/_contents/summary.json`,
+      }).then(({ data }) => data);
+
+      commit('setSummary', summary);
     }
   },
-  async getMdFile({ _state, commit }, { category, id }) {
+  async getMdFile({ state: _state, commit }, { category, id }) {
     if (_state.contents[category] && _state.contents[category][id]) return;
 
     const url = process.server ? `http://localhost:${process.env.PORT}` : '';

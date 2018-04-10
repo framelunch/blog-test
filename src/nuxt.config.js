@@ -1,9 +1,9 @@
-const globby = require('globby');
+const globby = require('globby'); //eslint-disable-line
 const fs = require('fs');
 
 module.exports = {
   build: {
-    vendor: ['axios', 'markdown-it', 'animejs'],
+    vendor: ['axios', 'animejs'],
     extend(config, { isServer }) {
       config.module.rules.push({
         test: /\.md$/,

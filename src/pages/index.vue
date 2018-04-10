@@ -5,24 +5,24 @@
         MAINイメージ
         <app-logo />
       </div>
-      <div>{{ JSON.stringify(metas) }}</div>
-      <div>
-        nuxt-link:
-        <nuxt-link to="/news/20180329/">news: 2018/03/29</nuxt-link>
-      </div>
-      <div>
-        a:
-        <a href="/news/20180329">news: 2018/03/29</a>
-      </div>
 
+      <div v-for="(item, index) in summary"
+           :key="index">
+        <p>{{ item.title }}</p>
+        <nuxt-link :to="'/news/' + $date(item.created_at, 'YYYYMMDD')">
+          {{ $date(item.created_at, 'YYYY/MM/DD HH:mm') }}
+        </nuxt-link>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'; //eslint-disable-line
+
 export default {
-  data() {
-    return { metas: this.$store.state.metas };
-  },
+  computed: mapState({
+    summary: state => state.summary,
+  }),
 };
 </script>

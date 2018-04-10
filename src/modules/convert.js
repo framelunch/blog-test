@@ -1,11 +1,13 @@
-const globby = require('globby');
 const fs = require('fs');
-
+/* eslint-disable */
+const globby = require('globby');
+const serialize = require('serialize-javascript');
 const attr = require('markdown-it-attrs');
 const container = require('markdown-it-container');
 const meta = require('markdown-it-meta');
 const hljs = require('highlight.js');
 const md = require('markdown-it')({
+  /* eslint-enable */
   html: true,
   linkify: true,
   breaks: true,
@@ -24,15 +26,24 @@ const md = require('markdown-it')({
   .use(container)
   .use(container, 'warning');
 
-module.exports = () => {
-  globby.sync('md/**/*').forEach(filename => {
-    const html = md.render(fs.readFileSync(filename, 'utf8'));
-    const path = filename
-      .replace('md/', '')
-      .replace('.md', '.html')
-      .split('/')
-      .join('.');
+/* eslint-disable */
+module.exports = function({ isDev }) {
+  /* eslint-enable */
+  if (isDev || process.env.NODE_ENV === 'production') {
+    const staticPath = `${process.cwd()}/src/static/_contents/`;
+    const summary = [];
+    globby.sync('md/**/*').forEach(filename => {
+      const html = md.render(fs.readFileSync(filename, 'utf8'));
+      const path = filename
+        .replace('md/', '')
+        .replace('.md', '.html')
+        .split('/')
+        .join('.');
 
-    fs.writeFileSync(`${process.cwd()}/src/static/_contents/${path}`, html, 'utf8');
-  });
+      fs.writeFileSync(`${staticPath}${path}`, html, 'utf8');
+      summary.push(md.meta);
+    });
+    // FIXME: なぜかJSON.stringifyを使うとエラーになってしまう。。serialize-javasciprtを使う
+    fs.writeFileSync(`${staticPath}summary.json`, serialize(summary, { isJSON: true }), 'utf8');
+  }
 };
