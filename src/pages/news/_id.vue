@@ -1,30 +1,34 @@
 <template>
-  <div v-html="content[this.$route.params.id]" />
+  <div v-html="contents[$route.params.id].html" />
 </template>
 
 <script>
-/* global isNaN */
-import { mapState, mapActions } from 'vuex'; //eslint-disable-line
+import { mapState } from 'vuex'; //eslint-disable-line
 
-const category = 'news';
+const target = 'news';
 
 export default {
+  layout: target,
+  head() {
+    const meta = this.contents[this.$route.params.id].meta || {};
+    return {
+      title: `${target} | ${meta.title}`,
+    };
+  },
   validate({ params }) {
     // TODO: 動的URLのバリデーション
-    return true;
+    return params.id;
   },
   fetch({ payload, route, store }) {
     // asyncDataと同じく、fetchでもthisは使えない
     if (payload) {
       // generate only
-      return store.commit('setContent', { category, id: route.params.id, data: payload });
+      return store.commit('setContent', { target, id: route.params.id, data: payload });
     }
-    return store.dispatch('getMdFile', { category, id: route.params.id });
+    return store.dispatch('getMdFile', { target, id: route.params.id });
   },
-  layout: 'news',
-
   computed: mapState({
-    content: state => state.contents[category],
+    contents: state => state[target],
   }),
 };
 </script>

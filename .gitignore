@@ -135,4 +135,4 @@ $RECYCLE.BIN/
 # Nuxt generate
 dist
 public
-_contents
+_contents/

@@ -2,16 +2,17 @@ import axios from 'axios';
 
 export const state = () => ({
   summary: [],
-  contents: {},
+  news: {}, // targetごとにobject追加とする
 });
 
 export const mutations = {
   setSummary(_state, summary) {
     _state.summary = summary;
   },
-  setContent(_state, { category, id, data }) {
-    const contents = { ..._state.contents[category], [id]: data };
-    _state.contents[category] = contents;
+  setContent(_state, { target, id, data }) {
+    if (!_state[target]) return;
+    const contents = { ..._state[target], [id]: data };
+    _state[target] = contents;
   },
 };
 
@@ -33,15 +34,20 @@ export const actions = {
       commit('setSummary', JSON.parse(data));
     }
   },
-  async getMdFile({ state: _state, commit }, { category, id }) {
-    if (_state.contents[category] && _state.contents[category][id]) return;
+  async getMdFile({ state: _state, commit }, { target, id }) {
+    if (!_state[target] || _state[target][id]) return;
 
     const url = process.server ? `http://localhost:${process.env.PORT}` : '';
-    const { data } = await axios({
-      method: 'get',
-      url: `${url}/_contents/${category}.${id}.html`,
-    });
 
-    commit('setContent', { category, id, data });
+    try {
+      const { data } = await axios({
+        method: 'get',
+        url: `${url}/_contents/${target}.${id}`,
+      });
+      commit('setContent', { target, id, data });
+    } catch (e) {
+      // TODO: error handlingはどうすればいいのだろうか。。以下暫定的に
+      commit('setContent', { target, id, data: {} });
+    }
   },
 };

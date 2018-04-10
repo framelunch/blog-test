@@ -10,7 +10,6 @@ const md = require('markdown-it')({
   /* eslint-enable */
   html: true,
   linkify: true,
-  breaks: true,
   injected: true,
   highlight(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
@@ -34,18 +33,15 @@ module.exports = function({ isDev }) {
     const summary = [];
     globby.sync('md/**/*').forEach(filename => {
       const html = md.render(fs.readFileSync(filename, 'utf8'));
-      const path = filename
-        .replace('md/', '')
-        .replace('.md', '.html')
-        .split('/')
-        .join('.');
+      const path = filename.replace('md/', '').replace('.md', '');
 
-      fs.writeFileSync(`${staticPath}${path}`, html, 'utf8');
+      fs.writeFileSync(
+        `${staticPath}${path.split('/').join('.')}`,
+        serialize({ html, meta: md.meta }, { isJSON: true }),
+        'utf8',
+      );
 
-      md.meta.url = path
-        .replace('.html', '')
-        .split('.')
-        .join('/');
+      md.meta.url = path;
       summary.push(md.meta);
     });
     // FIXME: なぜかJSON.stringifyを使うとエラーになってしまう。。serialize-javasciprtを使う
