@@ -26,11 +26,10 @@ module.exports = {
     routes() {
       const docs = [];
       // FIXME: modules/convert.jsで対応する <- generate時にsummaryを出力するタイミングが欲しい
-      globby.sync('src/static/_contents/**/*.html').forEach(filename => {
+      globby.sync(['src/static/_contents/**/*', '!src/static/_contents/summaries.json']).forEach(filename => {
         const html = fs.readFileSync(filename, 'utf8');
         const path = filename
           .replace('src/static/_contents', '')
-          .replace('.html', '')
           .split('.')
           .join('/');
         docs.push({

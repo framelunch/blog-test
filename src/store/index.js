@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 export const state = () => ({
-  summary: [],
+  summaries: [],
   news: {}, // targetごとにobject追加とする
 });
 
 export const mutations = {
-  setSummary(_state, summary) {
-    _state.summary = summary;
+  setSummaries(_state, summaries) {
+    _state.summaries = summaries;
   },
   setContent(_state, { target, id, data }) {
     if (!_state[target]) return;
@@ -30,8 +30,8 @@ export const actions = {
 
     if (process.server) {
       const fs = require('fs'); //eslint-disable-line
-      const data = fs.readFileSync(`${process.cwd()}/src/static/_contents/summary.json`, 'utf8');
-      commit('setSummary', JSON.parse(data));
+      const data = fs.readFileSync(`${process.cwd()}/src/static/_contents/summaries.json`, 'utf8');
+      commit('setSummaries', JSON.parse(data));
     }
   },
   async getMdFile({ state: _state, commit }, { target, id }) {
