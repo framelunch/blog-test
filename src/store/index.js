@@ -28,12 +28,9 @@ export const actions = {
     }
 
     if (process.server) {
-      const summary = await axios({
-        method: 'get',
-        url: `http://localhost:${process.env.PORT}/_contents/summary.json`,
-      }).then(({ data }) => data);
-
-      commit('setSummary', summary);
+      const fs = require('fs'); //eslint-disable-line
+      const data = fs.readFileSync(`${process.cwd()}/src/static/_contents/summary.json`, 'utf8');
+      commit('setSummary', JSON.parse(data));
     }
   },
   async getMdFile({ state: _state, commit }, { category, id }) {
