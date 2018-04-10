@@ -1,15 +1,31 @@
+// @flow
 import axios from 'axios';
 
-export const state = () => ({
-  summaries: [],
+type Meta = {
+  title: string,
+  created_date: string,
+};
+
+type Content = {
+  html: string,
+  meta: Meta,
+};
+
+type RootState = {
+  summary: Array<Meta>,
+  news: { [_id: string]: Content },
+};
+
+export const state = (): RootState => ({
+  summary: [],
   news: {}, // targetごとにobject追加とする
 });
 
 export const mutations = {
-  setSummaries(_state, summaries) {
-    _state.summaries = summaries;
+  setSummary(_state: RootState, summary: any) {
+    _state.summary = summary;
   },
-  setContent(_state, { target, id, data }) {
+  setContent(_state: RootState, { target, id, data }: any) {
     if (!_state[target]) return;
     const contents = { ..._state[target], [id]: data };
     _state[target] = contents;
@@ -17,8 +33,9 @@ export const mutations = {
 };
 
 export const actions = {
-  async nuxtServerInit({ commit }, { isStatic }) {
+  async nuxtServerInit({ commit }: any, { isStatic }: any) {
     // FIXME: mdファイルを編集後、呼ばれるのでhtml変換処理を行う。開発中のみ。
+    // $FlowFixMe
     if (process.env.NODE_ENV === 'development' && process.server && !isStatic) {
       /**
        * TODO:
@@ -28,15 +45,17 @@ export const actions = {
       require('../modules/convert')({ isDev: true }); //eslint-disable-line
     }
 
+    // $FlowFixMe
     if (process.server) {
       const fs = require('fs'); //eslint-disable-line
-      const data = fs.readFileSync(`${process.cwd()}/src/static/_contents/summaries.json`, 'utf8');
-      commit('setSummaries', JSON.parse(data));
+      const data = fs.readFileSync(`${process.cwd()}/src/static/_contents/summary.json`, 'utf8');
+      commit('setSummary', JSON.parse(data));
     }
   },
-  async getMdFile({ state: _state, commit }, { target, id }) {
+  async getMdFile({ state: _state, commit }: any, { target, id }: any) {
     if (!_state[target] || _state[target][id]) return;
 
+    // $FlowFixMe
     const url = process.server ? `http://localhost:${process.env.PORT}` : '';
 
     try {

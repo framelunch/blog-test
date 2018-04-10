@@ -45,6 +45,6 @@ module.exports = function({ isDev }) {
       summary.push(md.meta);
     });
     // FIXME: なぜかJSON.stringifyを使うとエラーになってしまう。。serialize-javasciprtを使う
-    fs.writeFileSync(`${staticPath}summaries.json`, serialize(summary, { isJSON: true }), 'utf8');
+    fs.writeFileSync(`${staticPath}summary.json`, serialize(summary, { isJSON: true }), 'utf8');
   }
 };

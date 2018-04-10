@@ -36,6 +36,7 @@
   "devDependencies": {
     "argv": "^0.0.2",
     "babel-eslint": "^8.2.2",
+    "babel-preset-flow": "^6.23.0",
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",

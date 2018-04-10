@@ -3,6 +3,9 @@ const fs = require('fs');
 
 module.exports = {
   build: {
+    babel: {
+      presets: ['vue-app', 'flow'],
+    },
     vendor: ['axios', 'animejs'],
     extend(config, { isServer }) {
       config.module.rules.push({
@@ -26,15 +29,15 @@ module.exports = {
     routes() {
       const docs = [];
       // FIXME: modules/convert.jsで対応する <- generate時にsummaryを出力するタイミングが欲しい
-      globby.sync(['src/static/_contents/**/*', '!src/static/_contents/summaries.json']).forEach(filename => {
-        const html = fs.readFileSync(filename, 'utf8');
+      globby.sync(['src/static/_contents/**/*', '!src/static/_contents/summary.json']).forEach(filename => {
+        const data = JSON.parse(fs.readFileSync(filename, 'utf8'));
         const path = filename
           .replace('src/static/_contents', '')
           .split('.')
           .join('/');
         docs.push({
           route: path,
-          payload: html,
+          payload: data,
         });
       });
       return docs;

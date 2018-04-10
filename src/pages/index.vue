@@ -6,7 +6,7 @@
         <app-logo />
       </div>
 
-      <div v-for="(item, index) in summaries"
+      <div v-for="(item, index) in summary"
            :key="index">
         <p>{{ item.title }}</p>
         <nuxt-link :to="item.url">
@@ -22,7 +22,7 @@ import { mapState } from 'vuex'; //eslint-disable-line
 
 export default {
   computed: mapState({
-    summaries: state => state.summaries,
+    summary: state => state.summary,
   }),
 };
 </script>
