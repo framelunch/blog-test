@@ -127,6 +127,10 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/osx,linux,windows,node
 
+### Editors ###
+/.idea
+/.vscode
+
 ### Nuxt ###
 
 # Nuxt build
