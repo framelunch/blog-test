@@ -25,7 +25,6 @@ module.exports = {
     dir: 'public',
     routes() {
       const docs = [];
-      const meta = {};
       // FIXME: modules/convert.jsで対応する <- generate時にsummaryを出力するタイミングが欲しい
       globby.sync('src/static/_contents/**/*.html').forEach(filename => {
         const html = fs.readFileSync(filename, 'utf8');

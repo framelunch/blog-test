@@ -41,6 +41,11 @@ module.exports = function({ isDev }) {
         .join('.');
 
       fs.writeFileSync(`${staticPath}${path}`, html, 'utf8');
+
+      md.meta.url = path
+        .replace('.html', '')
+        .split('.')
+        .join('/');
       summary.push(md.meta);
     });
     // FIXME: なぜかJSON.stringifyを使うとエラーになってしまう。。serialize-javasciprtを使う

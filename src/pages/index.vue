@@ -9,7 +9,7 @@
       <div v-for="(item, index) in summary"
            :key="index">
         <p>{{ item.title }}</p>
-        <nuxt-link :to="'/news/' + $date(item.created_at, 'YYYYMMDD')">
+        <nuxt-link :to="item.url">
           {{ $date(item.created_at, 'YYYY/MM/DD HH:mm') }}
         </nuxt-link>
       </div>
