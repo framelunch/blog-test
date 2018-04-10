@@ -50,6 +50,9 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      { src: 'https://cdn.polyfill.io/v2/polyfill.js?features=default-3.4,Array.prototype.includes,Object.entries' },
+    ],
   },
   /*
   ** Customize the progress bar color
