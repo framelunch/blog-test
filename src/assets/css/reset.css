@@ -4,7 +4,7 @@ body, div, dl, dt, dd, ul, ol, li, hr, h1, h2, h3, h4, h5, h6, address,
 pre, code, form, fieldset, legend, input, button, textarea, p, blockquote,
 table, th, td, iframe, form, fieldset, input, button, select, optgroup, option,
 textarea, label, legend, span, em, strong, dfn, code, samp, kbd, var, cite, abbr,
-acronym, q, br, ins, del, a, img, object {
+acronym, q, br, ins, del, a, img, object, figure, figcaption {
     margin: 0;
     padding: 0;
 }
