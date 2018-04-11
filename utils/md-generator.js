@@ -29,6 +29,7 @@ const template = ((_date, _title) =>
 title: ${_title}
 created_at: ${_date}
 tags: []
+author: John/Jane Doe
 publish: false
 ---
 
