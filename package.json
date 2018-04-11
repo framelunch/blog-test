@@ -17,7 +17,7 @@
     "subTaskConcurrency": 1,
     "linters": {
       "*.{js,vue}": [
-        "eslint --fix --ext",
+        "eslint --fix",
         "git add"
       ],
       "*.{css}": [
